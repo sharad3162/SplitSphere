@@ -9,8 +9,10 @@
 <body>
 <header class="site-header">
     <div class="header-inner">
-        <a class="brand" href="{{ url_for('home') }}">Split<span>Sphere</span></a>
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SplitSphere Logo">
+        <a class="brand" href="{{ url_for('home') }}">
+    <img src="{{ url_for('static', filename='images/logo.png') }}"
+         alt="SplitSphere Logo">
+</a>
         <p class="tagline">Share expenses. Settle fairly.</p>
         {% if current_user.is_authenticated %}
         <nav class="nav-links">
