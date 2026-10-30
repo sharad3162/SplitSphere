@@ -19,12 +19,17 @@ login_manager.login_view = "login"
 
 
 # ---------- DATABASE CONNECTION ----------
+
 def get_db():
     return mysql.connector.connect(
         host=app.config["MYSQL_HOST"],
+        port=app.config["MYSQL_PORT"],
         user=app.config["MYSQL_USER"],
         password=app.config["MYSQL_PASSWORD"],
         database=app.config["MYSQL_DATABASE"],
+        ssl_ca=app.config["MYSQL_SSL_CA"],
+        ssl_verify_cert=True,
+        ssl_verify_identity=True
     )
 
 
