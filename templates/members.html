@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading">
+    <a class="back-link" href="{{ url_for('groups') }}">← Back to My Groups</a>
+    <span class="eyebrow">GROUP MEMBERS</span>
+    <h1>Manage members</h1>
+    <p class="muted">Group: {{ group.group_name }}</p>
+</section>
+<section class="card">
+    <h2>Add a member</h2>
+    <p class="muted">Your friend must register for BillSplit Campus before you can add them.</p>
+    <form method="POST">
+        <label for="email">Friend's registered email</label>
+        <input id="email" name="email" type="email" placeholder="friend@example.com" required>
+        <button class="button" type="submit">Add Member</button>
+    </form>
+</section>
+<section class="card">
+    <div class="section-title"><h2>Group members</h2><span class="count-pill">{{ members|length }} member(s)</span></div>
+    {% for member in members %}
+        <div class="member-row">
+            <div class="avatar">{{ member.name[:1]|upper }}</div>
+            <div><strong>{{ member.name }}</strong><p class="muted">{{ member.email }}</p></div>
+        </div>
+    {% else %}
+        <p>No members found for this group.</p>
+    {% endfor %}
+</section>
+{% endblock %}

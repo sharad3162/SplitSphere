@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading heading-row">
+    <div><span class="eyebrow">YOUR COLLECTION</span><h1>My Groups</h1><p class="muted">Create a group or open an existing one.</p></div>
+</section>
+<section class="card">
+    <h2>Create an expense group</h2>
+    <form method="POST">
+        <label for="group_name">Group Name</label>
+        <input id="group_name" name="group_name" maxlength="100" placeholder="e.g. Rishikesh Trip or Python Project" required>
+        <label for="description">Description</label>
+        <textarea id="description" name="description" maxlength="255" rows="3" placeholder="Optional description"></textarea>
+        <button class="button" type="submit">Create Group</button>
+    </form>
+</section>
+<div class="section-title"><h2>Your groups</h2><span class="count-pill">{{ groups|length }} group(s)</span></div>
+<section class="group-grid">
+{% for group in groups %}
+    <article class="card group-card">
+        <div class="group-symbol">G</div>
+        <h3>{{ group.group_name }}</h3>
+        <p class="muted">{{ group.description or "No description added." }}</p>
+        <small class="muted">Group ID: {{ group.id }}</small>
+        <div class="group-actions">
+            <a class="button" href="{{ url_for('expenses', group_id=group.id) }}">Expenses</a>
+            <a class="button button-secondary" href="{{ url_for('manage_members', group_id=group.id) }}">Members</a>
+            <a class="button button-light" href="{{ url_for('settlement', group_id=group.id) }}">Settlement</a>
+            
+            
+        </div>
+    </article>
+{% else %}
+    <div class="card empty-state"><h3>No groups yet</h3><p>Create your first group using the form above.</p></div>
+{% endfor %}
+</section>
+{% endblock %}

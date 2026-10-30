@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="auth-wrap">
+    <div class="card auth-card">
+        <span class="eyebrow">WELCOME BACK</span>
+        <h1>Login to your account</h1>
+        <p class="muted">Continue managing your shared expenses.</p>
+        <form method="POST">
+            <label for="email">Email Address</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="Enter your email" required>
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+            <button class="button button-full" type="submit">Login</button>
+        </form>
+        <p class="form-bottom">New here? <a href="{{ url_for('register') }}">Create an account</a></p>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading">
+    <a class="back-link" href="{{ url_for('groups') }}">← Back to My Groups</a>
+    <span class="eyebrow">SETTLEMENT SUMMARY</span>
+    <h1>{{ group.group_name }}</h1>
+    <p class="muted">An equal split of the recorded group expenses.</p>
+</section>
+<section class="settlement-summary">
+    <div class="summary-card"><span>Total group expenses</span><strong>₹{{ "%.2f"|format(total_cents / 100) }}</strong></div>
+    <div class="summary-card"><span>Group members</span><strong>{{ members|length }}</strong></div>
+</section>
+<section class="card">
+    <h2>Member balances</h2>
+    <p class="muted">Positive balance means the member should receive money. Negative balance means they need to pay.</p>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Member</th><th>Paid</th><th>Equal share</th><th>Balance</th></tr></thead>
+        <tbody>
+        {% for member in members %}
+        <tr>
+            <td><strong>{{ member.name }}</strong></td>
+            <td>₹{{ "%.2f"|format(member.paid_display) }}</td>
+            <td>₹{{ "%.2f"|format(member.share_display) }}</td>
+            <td>
+            {% if member.balance_cents > 0 %}
+                <span class="balance-positive">+₹{{ "%.2f"|format(member.balance_display) }}</span>
+            {% elif member.balance_cents < 0 %}
+                <span class="balance-negative">−₹{{ "%.2f"|format(-member.balance_display) }}</span>
+            {% else %}
+                <span class="balance-neutral">Settled</span>
+            {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</section>
+<section class="card">
+    <h2>Who pays whom?</h2>
+    <p class="muted">These are suggested transfers to settle the balances; no actual payment is made by this app.</p>
+    {% for item in settlements %}
+        <div class="transfer-row">
+            <div><strong>{{ item.from_name }}</strong><span class="muted"> pays </span><strong>{{ item.to_name }}</strong></div>
+            <strong class="transfer-amount">₹{{ "%.2f"|format(item.amount) }}</strong>
+        </div>
+    {% else %}
+        <div class="empty-state"><p>No payments needed. Everyone is settled up!</p></div>
+    {% endfor %}
+    <p class="form-bottom"><a href="{{ url_for('expenses', group_id=group.id) }}">← Back to expenses</a></p>
+</section>
+{% endblock %}

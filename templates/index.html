@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero card">
+    <div class="hero-copy">
+        <span class="eyebrow">MADE FOR CAMPUS LIFE</span>
+        <h1>Shared expenses, <span>made simple.</span></h1>
+        <p>Manage group expenses, see who paid, and calculate fair settlements without confusion.</p>
+        <div class="button-row">
+            <a class="button" href="{{ url_for('register') }}">Create Account</a>
+            <a class="button button-secondary" href="{{ url_for('login') }}">Login</a>
+        </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+        <div class="art-card art-card-main"><span class="art-icon">₹</span><strong>Group expenses</strong><small>One place for everyone</small></div>
+        <div class="art-card art-card-small">✓ Fair settlements</div>
+    </div>
+</section>
+<section class="feature-grid">
+    <article class="card feature-card"><div class="feature-icon">01</div><h3>Create a group</h3><p>Start a group for trips, projects, flatmates or daily plans.</p></article>
+    <article class="card feature-card"><div class="feature-icon">02</div><h3>Record expenses</h3><p>Keep track of what was spent and who paid for it.</p></article>
+    <article class="card feature-card"><div class="feature-icon">03</div><h3>Settle fairly</h3><p>Calculate equal shares and see who should pay whom.</p></article>
+</section>
+{% endblock %}

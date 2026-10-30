@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading">
+    <a class="back-link" href="{{ url_for('groups') }}">← Back to My Groups</a>
+    <span class="eyebrow">GROUP EXPENSES</span>
+    <h1>{{ group.group_name }}</h1>
+    <p class="muted">Record and review the group's shared expenses.</p>
+</section>
+<section class="summary-card">
+    <span>Total recorded expenses</span>
+    <strong>₹{{ "%.2f"|format(total) }}</strong>
+</section>
+<section class="card">
+    <h2>Add a new expense</h2>
+    <form method="POST">
+        <label for="title">Expense Title</label>
+        <input id="title" name="title" maxlength="150" placeholder="e.g. Hotel booking" required>
+        <label for="amount">Amount (₹)</label>
+        <input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="e.g. 2500" required>
+        <label for="notes">Notes (optional)</label>
+        <textarea id="notes" name="notes" maxlength="255" rows="3" placeholder="Add a note"></textarea>
+        <button class="button" type="submit">Save Expense</button>
+    </form>
+</section>
+<div class="section-title"><h2>Expense history</h2><a class="text-link" href="{{ url_for('settlement', group_id=group.id) }}">View settlement →</a></div>
+<section class="expense-list">
+{% for item in expense_list %}
+    <article class="card expense-card">
+        <div class="expense-icon">₹</div>
+        <div class="expense-info"><h3>{{ item.title }}</h3><p>Paid by {{ item.payer_name }}</p>{% if item.notes %}<p class="muted">{{ item.notes }}</p>{% endif %}<small class="muted">{{ item.created_at }}</small></div>
+        <strong class="expense-amount">₹{{ "%.2f"|format(item.amount) }}</strong>
+    </article>
+{% else %}
+    <div class="card empty-state"><p>No expenses yet. Add your first expense above.</p></div>
+{% endfor %}
+</section>
+{% endblock %}
